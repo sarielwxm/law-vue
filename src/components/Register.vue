@@ -1,8 +1,8 @@
 <template>
-  <body id="poster">
+  <body id="paper">
   <el-form :model="loginForm" :rules="rules" class="login-container" label-position="left"
            label-width="0px" v-loading="loading">
-    <h3 class="login_title">系统登录</h3>
+    <h3 class="login_title">用户注册</h3>
     <el-form-item prop="username">
       <el-input type="text" v-model="loginForm.username"
                 auto-complete="off" placeholder="账号"></el-input>
@@ -11,17 +11,22 @@
       <el-input type="password" v-model="loginForm.password"
                 auto-complete="off" placeholder="密码"></el-input>
     </el-form-item>
-    <el-checkbox class="login_remember" v-model="checked"
-                 label-position="left"><span style="color: #505458">记住密码</span></el-checkbox>
+    <el-form-item>
+      <el-input type="text" v-model="loginForm.phone"
+                auto-complete="off" placeholder="电话号码"></el-input>
+    </el-form-item>
+    <el-form-item>
+      <el-input type="text" v-model="loginForm.email"
+                auto-complete="off" placeholder="E-Mail"></el-input>
+    </el-form-item>
     <el-form-item style="width: 100%">
-      <el-button type="primary" style="width: 100%;background: #505458;border: none" v-on:click="login">登录</el-button>
-      <router-link to="register">没有账号？</router-link>
+      <el-button type="primary" style="width: 40%;background: #505458;border: none" v-on:click="register">注册</el-button>
     </el-form-item>
   </el-form>
   </body>
 </template>
 <script>
-export default {
+export default{
   data () {
     return {
       rules: {
@@ -31,47 +36,42 @@ export default {
       checked: true,
       loginForm: {
         username: '',
-        password: ''
+        password: '',
+        phone: '',
+        email: ''
       },
       loading: false
     }
   },
   methods: {
-    login () {
+    register () {
       var _this = this
-      console.log(this.$store.state)
       this.$axios
-        .post('/login', {
+        .post('/register', {
           username: this.loginForm.username,
-          password: this.loginForm.password
+          password: this.loginForm.password,
+          phone: this.loginForm.phone,
+          email: this.loginForm.email
         })
-        .then(successResponse => {
-          if (successResponse.data.code === 200) {
-            // var data = this.loginForm
-            _this.$store.commit('login', _this.loginForm)
-            var path = this.$route.query.redirect
-            this.$router.replace({path: path === '/' || path === undefined ? '/index' : path})
-          }
-          if (successResponse.data.code === 601) {
-            this.$alert('用户不存在', '提示', {
+        .then(resp => {
+          if (resp.data.code === 200) {
+            this.$alert('注册成功', '提示', {
               confirmButtonText: '确定'
             })
-          }
-          if (successResponse.data.code === 602) {
-            this.$alert('密码错误', '提示', {
+            _this.$router.replace('/login')
+          } else {
+            this.$alert(resp.data.message, '提示', {
               confirmButtonText: '确定'
             })
           }
         })
-        .catch(failResponse => {
-        })
+        .catch(failResponse => {})
     }
   }
 }
 </script>
-
 <style>
-  #poster {
+  #paper {
     background:url("../assets/eva.jpg") no-repeat;
     background-position: center;
     height: 100%;
@@ -80,7 +80,7 @@ export default {
     position: fixed;
   }
   body{
-    margin: 0px;
+    margin: -5px 0px;
   }
   .login-container {
     border-radius: 15px;
@@ -97,5 +97,8 @@ export default {
     text-align: center;
     color: #505458;
   }
-
+  .login_remember {
+    margin: 0px 0px 35px 0px;
+    text-align: left;
+  }
 </style>
