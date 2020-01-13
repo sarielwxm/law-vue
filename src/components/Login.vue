@@ -25,8 +25,8 @@ export default {
   data () {
     return {
       loginForm: {
-        username: 'admin',
-        password: '123456'
+        username: '',
+        password: ''
       },
       responseResult: []
     }
@@ -46,6 +46,15 @@ export default {
             _this.$store.commit('login', _this.loginForm)
             var path = this.$route.query.redirect
             this.$router.replace({path: path === '/' || path === undefined ? '/index' : path})
+          } if (successResponse.data.code === 601) {
+            this.$alert('用户不存在', '提示', {
+              confirmButtonText: '确定'
+            })
+          }
+          if (successResponse.data.code === 602) {
+            this.$alert('密码错误', '提示', {
+              confirmButtonText: '确定'
+            })
           }
         })
         .catch(failResponse => {
