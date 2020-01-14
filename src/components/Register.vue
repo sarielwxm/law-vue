@@ -12,7 +12,7 @@
                 auto-complete="off" placeholder="密码"></el-input>
     </el-form-item>
     <el-form-item>
-      <el-input type="text" v-model="loginForm.phone"
+      <el-input type="text" v-model="loginForm.mobile"
                 auto-complete="off" placeholder="电话号码"></el-input>
     </el-form-item>
     <el-form-item>
@@ -37,7 +37,7 @@ export default{
       loginForm: {
         username: '',
         password: '',
-        phone: '',
+        mobile: '',
         email: ''
       },
       loading: false
@@ -50,25 +50,25 @@ export default{
         .post('/register', {
           username: this.loginForm.username,
           password: this.loginForm.password,
-          phone: this.loginForm.phone,
+          mobile: this.loginForm.mobile,
           email: this.loginForm.email
         })
-        .then(resp => {
-          if (resp.data.code === 200) {
+        .then(successResponse => {
+          if (successResponse.data.code === 200) {
             this.$alert('注册成功', '提示', {
               confirmButtonText: '确定'
             })
             _this.$router.replace('/login')
-          } if (resp.data.code === 610) {
+          } if (successResponse.data.code === 610) {
             this.$alert('用户名已存在', '提示', {
               confirmButtonText: '确定'
             })
-          } if (resp.data.code === 611) {
+          } if (successResponse.data.code === 611) {
             this.$alert('注册失败', '提示', {
               confirmButtonText: '确定'
             })
           } else {
-            this.$alert(resp.data.message, '提示', {
+            this.$alert(successResponse.data.message, '提示', {
               confirmButtonText: '确定'
             })
           }
