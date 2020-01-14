@@ -59,6 +59,14 @@ export default{
               confirmButtonText: '确定'
             })
             _this.$router.replace('/login')
+          } if (resp.data.code === 610) {
+            this.$alert('用户名已存在', '提示', {
+              confirmButtonText: '确定'
+            })
+          } if (resp.data.code === 611) {
+            this.$alert('注册失败', '提示', {
+              confirmButtonText: '确定'
+            })
           } else {
             this.$alert(resp.data.message, '提示', {
               confirmButtonText: '确定'
