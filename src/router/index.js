@@ -26,7 +26,7 @@ export default new Router({
       name: 'AppIndex',
       component: AppIndex,
       meta: {
-        requiredAuth: true
+        requireAuth: true
       }
     }
   ]
