@@ -11,6 +11,12 @@
       <el-input type="password" v-model="loginForm.password"
                 auto-complete="off" placeholder="密码"></el-input>
     </el-form-item>
+
+    <el-form-item prop="repassword">
+      <el-input type="repassword" v-model="loginForm.repassword"
+                auto-complete="off" placeholder="确认密码"></el-input>
+    </el-form-item>
+
     <el-form-item>
       <el-input type="text" v-model="loginForm.mobile"
                 auto-complete="off" placeholder="电话号码"></el-input>
@@ -31,12 +37,14 @@ export default{
     return {
       rules: {
         username: [{required: true, message: '用户名不能为空', trigger: 'blur'}],
-        password: [{required: true, message: '密码不能为空', trigger: 'blur'}]
+        password: [{required: true, message: '密码不能为空', trigger: 'blur'}],
+        repassword: [{required: true, message: '请再次输入密码', trigger: 'blur'}]
       },
       checked: true,
       loginForm: {
         username: '',
         password: '',
+        repassword: '',
         mobile: '',
         email: ''
       },
@@ -65,10 +73,6 @@ export default{
             })
           } if (successResponse.data.code === 611) {
             this.$alert('注册失败', '提示', {
-              confirmButtonText: '确定'
-            })
-          } else {
-            this.$alert(successResponse.data.message, '提示', {
               confirmButtonText: '确定'
             })
           }
