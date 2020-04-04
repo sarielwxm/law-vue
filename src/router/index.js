@@ -6,6 +6,7 @@ import Login from '@/components/Login'
 import Register from '../components/Register'
 import Home from '../components/Home'
 import AdminIndex from '../components/admin/AdminIndex'
+import factSearchIndex from '../components/factSearch/factSearchIndex'
 
 Vue.use(Router)
 
@@ -26,6 +27,11 @@ export default new Router({
           meta: {
             requireAuth: true
           }
+        },
+        {
+          path: '/factSearch',
+          name: 'factSearch',
+          component: factSearchIndex
         }
       ]
     },

@@ -7,11 +7,9 @@
 </template>
 
 <script>
-import NavMenu from './common/NavMenu'
-import SearchBar from './common/SearchBar'
+import NavMenu from '@/components/common/NavMenu'
 export default {
-  name: 'Home',
-  components: {SearchBar, NavMenu}
+  components: {NavMenu}
 }
 </script>
 

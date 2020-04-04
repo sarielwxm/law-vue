@@ -52,6 +52,12 @@ export default {
             var path = this.$route.query.redirect
             this.$router.replace({path: path === '/' || path === undefined ? '/index' : path})
           }
+          if (successResponse.data.code === 201) {
+            // var data = this.loginForm
+            _this.$store.commit('login', _this.loginForm)
+            var path1 = this.$route.query.redirect
+            this.$router.replace({path: path1 === '/' || path1 === undefined ? '/admin' : path})
+          }
           if (successResponse.data.code === 601) {
             this.$alert('用户不存在', '提示', {
               confirmButtonText: '确定'
