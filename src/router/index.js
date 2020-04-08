@@ -7,6 +7,8 @@ import Register from '../components/Register'
 import Home from '../components/Home'
 import AdminIndex from '../components/admin/AdminIndex'
 import factSearchIndex from '../components/factSearch/factSearchIndex'
+import UserProfile from '../components/admin/user/UserProfile'
+import Role from '../components/admin/user/Role'
 
 Vue.use(Router)
 
@@ -51,7 +53,22 @@ export default new Router({
       component: AdminIndex,
       meta: {
         requireAuth: true
-      }
+      },
+      children: [
+        {
+          path: '/admin/userProfile',
+          name: 'userProfile',
+          component: UserProfile,
+          meta: {
+            requireAuth: true
+          }
+        },
+        {
+          path: '/admin/role',
+          name: 'role',
+          component: Role
+        }
+      ]
     }
   ]
 })

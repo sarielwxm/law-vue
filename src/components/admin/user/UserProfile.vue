@@ -62,7 +62,7 @@
         </el-table-column>
         <el-table-column
           prop="name"
-          label="真实姓名"
+          label="登录名"
           fit>
         </el-table-column>
         <el-table-column
