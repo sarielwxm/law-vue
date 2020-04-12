@@ -10,12 +10,12 @@
         <el-form-item label="角色描述" label-width="120px" prop="name">
           <el-input v-model="selectedRole.nameZh" autocomplete="off"></el-input>
         </el-form-item>
-        <el-form-item label="功能配置" label-width="120px" prop="perms">
+        <el-form-item label="123" label-width="120px" prop="perms">
           <el-checkbox-group v-model="selectedPermsIds">
             <el-checkbox v-for="(perm,i) in perms" :key="i" :label="perm.id">{{perm.desc_}}</el-checkbox>
           </el-checkbox-group>
         </el-form-item>
-        <el-form-item label="菜单配置" label-width="120px" prop="menus">
+        <el-form-item label="123" label-width="120px" prop="menus">
           <el-tree
             :data="menus"
             :props="props"

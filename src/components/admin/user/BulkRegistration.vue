@@ -10,15 +10,11 @@
                label-width="0px">
         <el-form-item prop="username">
           <el-input type="text" v-model="loginForm.username"
-                    auto-complete="off" placeholder="账号"></el-input>
+                    auto-complete="off" placeholder="用户名"></el-input>
         </el-form-item>
         <el-form-item prop="password">
           <el-input type="password" v-model="loginForm.password"
                     auto-complete="off" placeholder="密码"></el-input>
-        </el-form-item>
-        <el-form-item>
-          <el-input type="text" v-model="loginForm.name"
-                    auto-complete="off" placeholder="登录名"></el-input>
         </el-form-item>
         <el-form-item>
           <el-input type="text" v-model="loginForm.phone"
@@ -49,7 +45,6 @@ export default {
       loginForm: {
         username: '',
         password: '',
-        name: '',
         phone: '',
         email: ''
       }
@@ -60,7 +55,6 @@ export default {
       this.loginForm = {
         username: '',
         password: '',
-        name: '',
         phone: '',
         email: ''
       }
@@ -70,7 +64,6 @@ export default {
         .post('/register', {
           username: this.loginForm.username,
           password: this.loginForm.password,
-          name: this.loginForm.name,
           phone: this.loginForm.phone,
           email: this.loginForm.email
         })

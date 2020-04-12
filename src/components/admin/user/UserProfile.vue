@@ -7,9 +7,6 @@
         <el-form-item label="用户名" label-width="120px" prop="username">
           <label>{{selectedUser.username}}</label>
         </el-form-item>
-        <el-form-item label="真实姓名" label-width="120px" prop="name">
-          <el-input v-model="selectedUser.name" autocomplete="off"></el-input>
-        </el-form-item>
         <el-form-item label="手机号" label-width="120px" prop="phone">
           <el-input v-model="selectedUser.phone" autocomplete="off"></el-input>
         </el-form-item>
@@ -24,6 +21,7 @@
             <el-checkbox v-for="(role,i) in roles" :key="i" :label="role.id">{{role.nameZh}}</el-checkbox>
           </el-checkbox-group>
         </el-form-item>
+
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="dialogFormVisible = false">取 消</el-button>
@@ -100,8 +98,10 @@
               编辑
             </el-button>
             <el-button
+              @click="removeUser(scope.row)"
               type="text"
-              size="small">
+              size="small"
+              icon="el-icon-delete" >
               移除
             </el-button>
           </template>
@@ -145,6 +145,30 @@ export default {
         if (resp && resp.status === 200) {
           _this.users = resp.data
         }
+      })
+    },
+    removeUser (username) {
+      this.$confirm('此操作将永久删除该用户, 是否继续?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        this.$axios.delete('/admin/user', {
+          username: username
+        }).then(resp => {
+          if (resp && resp.status === 501) {
+            return this.$message.error('删除用户失败')
+          }
+        })
+        this.$message({
+          type: 'success',
+          message: '删除成功!'
+        })
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '已取消删除'
+        })
       })
     },
     listRoles () {
