@@ -61,12 +61,12 @@
           fit>
         </el-table-column>
         <el-table-column
-          prop="name"
-          label="登录名"
+          prop="roles"
+          label="角色"
           fit>
         </el-table-column>
         <el-table-column
-          prop="phone"
+          prop="mobile"
           label="手机号"
           fit>
         </el-table-column>
@@ -186,9 +186,9 @@ export default {
         }
       }
       this.$axios.put('/admin/user', {
+        userid: user.userid,
         username: user.username,
-        name: user.name,
-        phone: user.phone,
+        mobile: user.mobile,
         email: user.email,
         roles: roles
       }).then(resp => {
