@@ -1,7 +1,7 @@
 <template>
   <el-card class="box-card">
     <div slot="header" class="clearfix">
-      <span style="font-weight: bold;font-size: 20px">新闻</span>
+      <span style="font-weight: bold;font-size: 20px">新闻3</span>
       <!--<el-button style="float: right; padding: 3px 0" type="text">修改</el-button>-->
     </div>
     <div class="block">
@@ -37,9 +37,10 @@
             <h4>xxx</h4>
             <p></p>
           </el-card>
-        </el-timeline-item><div align="right">
-        <a href="https://www.xmu.edu.cn/" target="_blank">查看更多</a>
-      </div>
+        </el-timeline-item>
+        <div align="right">
+          <a href="https://www.xmu.edu.cn/" target="_blank">查看更多</a>
+        </div>
       </el-timeline>
     </div>
   </el-card>
@@ -47,15 +48,15 @@
 
 <script>
 export default {
-  name: 'UpdateCard'
+  name: 'UpdateCard3'
 }
 </script>
 
 <style scoped>
   .box-card {
     margin-top: 5px;
-    width: 730px;
-    height: 870px;
+    width: 1500px;
+    height: 850px;
     text-align: left;
   }
 </style>

@@ -23,9 +23,9 @@
 
   .card-carousel {
     /*margin: 0 auto;*/
-    margin-top: -370px;
-    margin-left: 820px;
-    width: 680px;
+    margin-top: -140px;
+    margin-left: 150px;
+    width: 1200px;
     height: 340px;
   }
 
@@ -56,7 +56,7 @@ export default {
       items: [{
         id: 1,
         title: 'How2J.cn - Java 全栈学习网站',
-        img: '../../assets/eva.jpg',
+        img: '../../../static/img/carousel/how2j.png',
         link: 'http://how2j.cn?p=50613'},
       {
         id: 2,
