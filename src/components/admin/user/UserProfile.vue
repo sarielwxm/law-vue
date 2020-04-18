@@ -139,6 +139,22 @@ export default {
     }
   },
   methods: {
+    listUsers () {
+      var _this = this
+      this.$axios.get('/admin/user').then(resp => {
+        if (resp && resp.status === 200) {
+          _this.users = resp.data
+        }
+      })
+    },
+    listRoles () {
+      var _this = this
+      this.$axios.get('/admin/role').then(resp => {
+        if (resp && resp.status === 200) {
+          _this.roles = resp.data
+        }
+      })
+    },
     handleChange (arr) {
       this.selectedRolesIds.length > 1 && this.selectedRolesIds.shift()
       this.$nextTick(() => {
@@ -146,113 +162,97 @@ export default {
         this.$emit('change', val)
         this.$emit('input', val)
       })
-    }
-  },
-  listUsers () {
-    var _this = this
-    this.$axios.get('/admin/user').then(resp => {
-      if (resp && resp.status === 200) {
-        _this.users = resp.data
+    },
+    removeUser (username) {
+      this.$confirm('此操作将永久删除该用户, 是否继续?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        this.$axios.delete('/admin/user', {
+          username: username
+        }).then(resp => {
+          if (resp && resp.status === 501) {
+            return this.$message.error('删除用户失败')
+          }
+        })
+        this.$message({
+          type: 'success',
+          message: '删除成功!'
+        })
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '已取消删除'
+        })
+      })
+    },
+    commitStatusChange (value, user) {
+      if (user.username !== 'admin') {
+        this.$axios.put('/admin/user/status', {
+          enabled: value,
+          username: user.username
+        }).then(resp => {
+          if (resp && resp.status === 200) {
+            if (value) {
+              this.$message('用户 [' + user.username + '] 已启用')
+            } else {
+              this.$message('用户 [' + user.username + '] 已禁用')
+            }
+          }
+        })
+      } else {
+        user.enabled = true
+        this.$alert('不能禁用管理员账户')
       }
-    })
-  },
-  removeUser (username) {
-    this.$confirm('此操作将永久删除该用户, 是否继续?', '提示', {
-      confirmButtonText: '确定',
-      cancelButtonText: '取消',
-      type: 'warning'
-    }).then(() => {
-      this.$axios.delete('/admin/user', {
-        username: username
-      }).then(resp => {
-        if (resp && resp.status === 501) {
-          return this.$message.error('删除用户失败')
-        }
-      })
-      this.$message({
-        type: 'success',
-        message: '删除成功!'
-      })
-    }).catch(() => {
-      this.$message({
-        type: 'info',
-        message: '已取消删除'
-      })
-    })
-  },
-  listRoles () {
-    var _this = this
-    this.$axios.get('/admin/role').then(resp => {
-      if (resp && resp.status === 200) {
-        _this.roles = resp.data
-      }
-    })
-  },
-  commitStatusChange (value, user) {
-    if (user.username !== 'admin') {
-      this.$axios.put('/admin/user/status', {
-        enabled: value,
-        username: user.username
-      }).then(resp => {
-        if (resp && resp.status === 200) {
-          if (value) {
-            this.$message('用户 [' + user.username + '] 已启用')
-          } else {
-            this.$message('用户 [' + user.username + '] 已禁用')
+    },
+    onSubmit (user) {
+      let _this = this
+      // 根据视图绑定的角色 id 向后端传送角色信息
+      let roles = []
+      for (let i = 0; i < _this.selectedRolesIds.length; i++) {
+        for (let j = 0; j < _this.roles.length; j++) {
+          if (_this.selectedRolesIds[i] === _this.roles[j].id) {
+            roles.push(_this.roles[j])
           }
         }
-      })
-    } else {
-      user.enabled = true
-      this.$alert('不能禁用管理员账户')
-    }
-  },
-  onSubmit (user) {
-    let _this = this
-    // 根据视图绑定的角色 id 向后端传送角色信息
-    let roles = []
-    for (let i = 0; i < _this.selectedRolesIds.length; i++) {
-      for (let j = 0; j < _this.roles.length; j++) {
-        if (_this.selectedRolesIds[i] === _this.roles[j].id) {
-          roles.push(_this.roles[j])
+      }
+      this.$axios.put('/admin/user', {
+        username: user.username,
+        mobile: user.mobile,
+        email: user.email,
+        roles: roles
+      }).then(resp => {
+        if (resp && resp.status === 200) {
+          this.$alert('用户信息修改成功')
+          this.dialogFormVisible = false
+          // 修改角色后重新请求用户信息，实现视图更新
+          this.listUsers()
         }
+      })
+    },
+    editUser (user) {
+      this.dialogFormVisible = true
+      this.selectedUser = user
+      let roleIds = []
+      for (let i = 0; i < user.roles.length; i++) {
+        roleIds.push(user.roles[i].id)
       }
+      this.selectedRolesIds = roleIds
+    },
+    resetPassword (username) {
+      this.$axios.put('/admin/user/password', {
+        username: username
+      }).then(resp => {
+        if (resp && resp.status === 200) {
+          this.$alert('密码已重置为 123')
+        }
+      })
     }
-    this.$axios.put('/admin/user', {
-      username: user.username,
-      mobile: user.mobile,
-      email: user.email,
-      roles: roles
-    }).then(resp => {
-      if (resp && resp.status === 200) {
-        this.$alert('用户信息修改成功')
-        this.dialogFormVisible = false
-        // 修改角色后重新请求用户信息，实现视图更新
-        this.listUsers()
-      }
-    })
-  },
-  editUser (user) {
-    this.dialogFormVisible = true
-    this.selectedUser = user
-    let roleIds = []
-    for (let i = 0; i < user.roles.length; i++) {
-      roleIds.push(user.roles[i].id)
-    }
-    this.selectedRolesIds = roleIds
-  },
-  resetPassword (username) {
-    this.$axios.put('/admin/user/password', {
-      username: username
-    }).then(resp => {
-      if (resp && resp.status === 200) {
-        this.$alert('密码已重置为 123')
-      }
-    })
   }
 }
 </script>
 
-  <style scoped>
+<style scoped>
 
 </style>
