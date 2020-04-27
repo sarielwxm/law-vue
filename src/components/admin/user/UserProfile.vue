@@ -155,7 +155,7 @@ export default {
         }
       })
     },
-    handleChange (arr) {
+    handleChange (selectedRolesIds) {
       this.selectedRolesIds.length > 1 && this.selectedRolesIds.shift()
       this.$nextTick(() => {
         let val = this.selectedRolesIds.length > 0 ? this.selectedRolesIds[0] : ''

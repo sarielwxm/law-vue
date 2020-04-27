@@ -24,8 +24,8 @@
   .card-carousel {
     /*margin: 0 auto;*/
     margin-top: -140px;
-    margin-left: 150px;
-    width: 1200px;
+    margin-left: 780px;
+    width: 700px;
     height: 340px;
   }
 
@@ -55,19 +55,19 @@ export default {
     return {
       items: [{
         id: 1,
-        title: 'How2J.cn - Java 全栈学习网站',
-        img: '../../../static/img/carousel/how2j.png',
+        title: '法律相关1',
+        img: '../../../static/img/carousel/how2j.jpg',
         link: 'http://how2j.cn?p=50613'},
       {
         id: 2,
-        title: 'Vue.js - 渐进式 JavaScript 框架',
-        img: '../../../static/img/carousel/vue.png',
+        title: '法律相关2',
+        img: '../../../static/img/carousel/vue.jpg',
         link: 'https://cn.vuejs.org/'
       },
       {
         id: 3,
-        title: 'element-ui - 网站快速成型工具',
-        img: '../../../static/img/carousel/element.png',
+        title: '法律相关3',
+        img: '../../../static/img/carousel/element.jpg',
         link: 'http://element-cn.eleme.io/#/zh-CN'
       }]
     }

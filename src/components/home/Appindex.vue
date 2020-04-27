@@ -7,11 +7,16 @@
         <carousel></carousel>
         <quick-nav style="float: right;margin-top: -450px;margin-right: 480px"></quick-nav>
       </div>
+
       <update-card id="update-card"></update-card>
       <div id="update-card1">
         <update-card1></update-card1>
       </div>
+      <a href="https://www.baidu.com" target="_blank">
+        <img src="../../assets/icon/123.png">
+      </a>
       <update-card2 id="update-card2"></update-card2>
+
       <update-card3 id="update-card3"></update-card3>
       <slogan id="slogan"></slogan>
       <about id="about"></about>
@@ -24,10 +29,11 @@ import Carousel from './Carousel'
 import UpdateCard from './UpdateCard'
 import UpdateCard1 from './UpdateCard1'
 import UpdateCard2 from './UpdateCard2'
+import Slogan from './Slogan'
 
 export default {
   name: 'AppIndex',
-  components: {Carousel, UpdateCard, UpdateCard1, UpdateCard2}
+  components: {Carousel, UpdateCard, UpdateCard1, UpdateCard2, Slogan}
 }
 </script>
 
