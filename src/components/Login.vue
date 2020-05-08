@@ -46,7 +46,7 @@ export default {
           password: this.loginForm.password
         })
         .then(successResponse => {
-          if (successResponse.data.code === 200) {
+          if (successResponse.data.code === 200 || successResponse.data.code === 203) {
             // var data = this.loginForm
             _this.$store.commit('login', _this.loginForm)
             var path = this.$route.query.redirect
